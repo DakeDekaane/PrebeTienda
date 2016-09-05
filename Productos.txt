@@ -1,0 +1,20 @@
+Leche	20	15
+Cereal	5	30
+Huevo	5	25
+Azúcar	10	8
+Sal	5	10
+Café	10
+Agua	20	25
+Queso	10	80
+Jamón	10	90
+Pan	20	5
+Galletas	10	10
+Paletas	20	2
+Chocolate	20	5
+Dulces	20	1
+Pasta	10	4
+Servilletas	5	20
+Papel Higiénico	40	4
+Refresco	10	20
+Jugo	10	15
+Jabón	10	24
