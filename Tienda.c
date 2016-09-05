@@ -4,6 +4,7 @@
 
 enum boolean{false,true};
 
+
 //int num_usuarios=2;
 //int tamano_contrasena=5;
 //int tamano_usuario=10;
@@ -53,5 +54,17 @@ int main(int argc, char const *argv[])
 	printf("\t\tPrebeTienda\n");
 
 	valida_usuario();
+
+	FILE *archivo = fopen("Productos.txt","a+");
+	if (!archivo) {
+		printf("Error al cargar base de datos. Verifique el archivo.\n");
+		return 1;
+	}
+
+	char linea[30];
+	fscanf(archivo,"%s",linea);
+	printf("%s\n",linea);
+	fclose(archivo);
+	
 	return 0;
 }
