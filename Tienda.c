@@ -9,55 +9,85 @@
 //int tamano_contrasena=5;
 //int tamano_usuario=10;
 
-char usuarios[2][10]={"donaldo","2"};
-char contrasenas[2][5]={"1994","1991"};
+char usuarios[2][10] = {"donaldo","2"};
+char contrasenas[2][5] = {"1994","1991"};
 
+int intentos = 3;	
 
+enum boolean validaUsuario();
 
-int intentos=3;	
-int check=0;
+int main(int argc, char const *argv[]) {
 
-enum boolean valida_usuario();
+	if(validaUsuario()) {
 
+		system("clear");
+		int salir = 0;
+		int opcion;
+		char nombreProducto[20]={'\0'};
+		int cantidad;
+		float precio;
+		CargaInventario();
+		
+		do {
+		
+			printf("\n\t\t\t\tLa PrebeTienda\n\n\n");			
+			system("clear");
+			printf("Menú:\n");
+			printf("1. Mostrar inventario completo.\n");
+			printf("2. Mostrar detalles de un producto.\n");
+			printf("3. Agregar producto.\n");
+			printf("4. Remover producto.\n");
+			printf("5. Editar detalles de un producto.\n");
+			printf("6. Salir\n");
+			printf("Ingrese una opción: ");
+			scanf("%d",&opcion);
+			
+			switch(opcion) {
+				case 1:
+					ImprimeInventario();
+					break;
+				case 2:
+					printf("\nIngrese el nombre del producto: ");
+					scanf(" %[^\n]",nombreProducto);
+					BuscaProducto(nombreProducto);
+					break;
+				case 3:
+					printf("\nIngrese el nombre del producto: ");
+					scanf(" %[^\n]",nombreProducto);
+					printf("\nIngrese la cantidad del producto: ");
+					scanf("%d",&cantidad);
+					printf("\nIngrese el precio del producto: ");
+					scanf("%f",&precio);
+					InsertaProducto(crearNodo(nombreProducto,cantidad,precio));
+					break;
+				case 4:
+					printf("\nIngrese el nombre del producto: ");
+					scanf(" %[^\n]",nombreProducto);
+					RemueveProducto(nombreProducto);
+					break;
+				case 5:
+					printf("\nIngrese el nombre del producto: ");
+					scanf(" %[^\n]",nombreProducto);
+					ModificaInventario(nombreProducto);
+					break;
+				case 6:
+					salir = 1;
+					break;
+				default:
+					printf("\nOpción inválida");
+					break;
+			}
 
-int main(int argc, char const *argv[])
-{
-	printf("\t\tPrebeTienda\n");
+			GuardaInventario();
 
-	valida_usuario();
+		} while(salir == 0);
 
-	FILE *archivo = fopen("Productos.txt","a+");
-	if (!archivo) {
-		printf("Error al cargar base de datos. Verifique el archivo.\n");
-		return 1;
 	}
-
-	char linea[30];
-	fscanf(archivo,"%s",linea);
-	printf("%s\n",linea);
-	fclose(archivo);
-
-	InsertaNodo(crearNodo("Papas",10,8.00));	
-	InsertaNodo(crearNodo("Refresco",15,9.50));
-	InsertaNodo(crearNodo("Leche",2,100.00));
-	InsertaNodo(crearNodo("Chocolate",30,0.50));
-	InsertaNodo(crearNodo("Cafe",25,2.50));
-	ImprimeNodos();
-	printf("\n");
-	RemueveNodo("Refresco");
-	ImprimeNodos();
-	printf("\n");
-	ModificaNodo("Dulces");
-	ModificaNodo("Papas");
-	ImprimeNodos();
-	printf("\n");
-	BuscaNodo("Leche");
-	BuscaNodo("Agua");
 	
 	return 0;
 }
 
-enum boolean valida_usuario(){
+enum boolean validaUsuario(){
 
 	char usuarioIngresado[16]={'\0'}, contrasenaIngresada[16]={'\0'};
 	do {
@@ -68,26 +98,18 @@ enum boolean valida_usuario(){
 	
 		for (int i=0;i<2;i++) {
 			if( strcmp(usuarioIngresado,usuarios[i]) == 0 && strcmp(contrasenaIngresada,contrasenas[i]) ==0 ) {
-				printf("Acceso autorizado. Bienvenido, %s.\n",usuarioIngresado);
-				check = 1;
-				break;
+				printf("Acceso autorizado. Bienvenido, %s.\n\n\n\n\n",usuarioIngresado);
+				return true;
 			}
 			else {
 				continue;
 			}
 		}
-		
-		if ( check == 0 ) {
-			printf("Acceso denegado. Verifique sus datos\n");
-			intentos--;
-		}
-		else {
-			continue;
-		}
+		printf("Acceso denegado. Verifique sus datos\n");
+		intentos--;
+	} while(intentos > 0);
 
-	} while(intentos > 0 && check == 0 );
-
-	if (intentos == 0) printf("Ha realizado 3 intentos fallidos, se le reportará al servidor\n\n");
-	return 1;
+	if (intentos == 0) printf("Ha realizado 3 intentos fallidos, se le reportará al administrador.\n\n");
+	return false;
 }
 
