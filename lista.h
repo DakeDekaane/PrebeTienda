@@ -153,6 +153,7 @@ void CargaInventario() {
 		fscanf(inventario,"%s %d %f\n",nombreProducto,&cantidad,&precio);
 		InsertaProducto(crearNodo(nombreProducto,cantidad,precio));
 	}
+	fclose(inventario);
 }
 
 void GuardaInventario() {
@@ -166,5 +167,5 @@ void GuardaInventario() {
 		fprintf(inventario,"%s %d %.2f\n",aux->nombreProducto,aux->cantidad,aux->precio);
 		aux = aux->siguiente;
 	}
-
+	fclose(inventario);
 }
