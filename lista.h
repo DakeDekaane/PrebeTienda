@@ -29,7 +29,7 @@ enum boolean ListaVacia() {
 }
 
 //Inserta nodo al final de la lista.
-void InsertaNodo(Nodo* nodo) {
+void InsertaProducto(Nodo* nodo) {
 	if(ListaVacia()) {
 		inicio = nodo;
 		final = nodo;
@@ -42,7 +42,7 @@ void InsertaNodo(Nodo* nodo) {
 }
 
 //Remueve elemento por nombre.
-Nodo* RemueveNodo(char nombreProducto[]) {
+Nodo* RemueveProducto(char nombreProducto[]) {
 	//Si la lista está vacía.
 	if(ListaVacia()) {
 		return (Nodo*)NULL;
@@ -69,7 +69,7 @@ Nodo* RemueveNodo(char nombreProducto[]) {
 	}
 }
 
-void BuscaNodo(char nombreProducto[]) {
+void BuscaProducto(char nombreProducto[]) {
 	if(ListaVacia()) {
 		printf("Lista Vacía.\n");
 	}
@@ -87,7 +87,7 @@ void BuscaNodo(char nombreProducto[]) {
 	}
 }
 
-void ImprimeNodos() {
+void ImprimeInventario() {
 	//Si la lista está vacía.
 	if(ListaVacia()) {
 		printf("Lista Vacía.\n");
@@ -105,7 +105,7 @@ void ImprimeNodos() {
 	}
 }
 
-void ModificaNodo(char nombreProducto[]) {
+void ModificaInventario(char nombreProducto[]) {
 	//Si la lista está vacía.
 	if(ListaVacia()) {
 		printf("Lista Vacía.\n");
@@ -136,4 +136,35 @@ void ModificaNodo(char nombreProducto[]) {
 				break;
 		}
 	}
+}
+
+void CargaInventario() {
+	FILE* inventario = fopen("Productos.txt","r");
+	if (!inventario) {
+		printf("Error al cargar inventario. Verifique el archivo.\n");
+		return;
+	}
+	Nodo* aux = inicio;
+	char nombreProducto[20];
+	int cantidad;
+	float precio;	
+	
+	while(!feof(inventario)){
+		fscanf(inventario,"%s %d %f\n",nombreProducto,&cantidad,&precio);
+		InsertaProducto(crearNodo(nombreProducto,cantidad,precio));
+	}
+}
+
+void GuardaInventario() {
+	FILE* inventario = fopen("Productos.txt","w");
+	if (!inventario) {
+		printf("Error al guardar el inventario. Verifique el archivo.\n");
+		return;
+	}
+	Nodo* aux = inicio;
+	while(aux != NULL){
+		fprintf(inventario,"%s %d %.2f\n",aux->nombreProducto,aux->cantidad,aux->precio);
+		aux = aux->siguiente;
+	}
+
 }
