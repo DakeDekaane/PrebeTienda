@@ -15,6 +15,7 @@ char contrasenas[2][5] = {"1994","1991"};
 int intentos = 3;	
 
 enum boolean validaUsuario();
+void getch();
 
 int main(int argc, char const *argv[]) {
 
@@ -30,26 +31,28 @@ int main(int argc, char const *argv[]) {
 		
 		do {
 		
-			printf("\n\t\t\t\tLa PrebeTienda\n\n\n");			
 			system("clear");
+			printf("\n\t\t\t\tLa PrebeTienda\n\n\n");
 			printf("Menú:\n");
-			printf("1. Mostrar inventario completo.\n");
-			printf("2. Mostrar detalles de un producto.\n");
-			printf("3. Agregar producto.\n");
-			printf("4. Remover producto.\n");
-			printf("5. Editar detalles de un producto.\n");
-			printf("6. Salir\n");
+			printf("    1. Mostrar inventario completo.\n");
+			printf("    2. Mostrar detalles de un producto.\n");
+			printf("    3. Agregar producto.\n");
+			printf("    4. Remover producto.\n");
+			printf("    5. Editar detalles de un producto.\n");
+			printf("    6. Salir\n");
 			printf("Ingrese una opción: ");
 			scanf("%d",&opcion);
 			
 			switch(opcion) {
 				case 1:
 					ImprimeInventario();
+					getch();
 					break;
 				case 2:
 					printf("\nIngrese el nombre del producto: ");
 					scanf(" %[^\n]",nombreProducto);
 					BuscaProducto(nombreProducto);
+					getch();
 					break;
 				case 3:
 					printf("\nIngrese el nombre del producto: ");
@@ -59,16 +62,19 @@ int main(int argc, char const *argv[]) {
 					printf("\nIngrese el precio del producto: ");
 					scanf("%f",&precio);
 					InsertaProducto(crearNodo(nombreProducto,cantidad,precio));
+					getch();
 					break;
 				case 4:
 					printf("\nIngrese el nombre del producto: ");
 					scanf(" %[^\n]",nombreProducto);
 					RemueveProducto(nombreProducto);
+					getch();
 					break;
 				case 5:
 					printf("\nIngrese el nombre del producto: ");
 					scanf(" %[^\n]",nombreProducto);
 					ModificaInventario(nombreProducto);
+					getch();
 					break;
 				case 6:
 					salir = 1;
@@ -90,10 +96,13 @@ int main(int argc, char const *argv[]) {
 enum boolean validaUsuario(){
 
 	char usuarioIngresado[16]={'\0'}, contrasenaIngresada[16]={'\0'};
+
+	printf("Ingrese su usuario y contraseña para continuar.\n\n");
+
 	do {
-		printf("Usuario: ");
+		printf("\tUsuario: ");
 		scanf(" %[^\n]",usuarioIngresado);
-		printf("Contraseña: ");
+		printf("\tContraseña: ");
 		scanf(" %[^\n]",contrasenaIngresada);
 	
 		for (int i=0;i<2;i++) {
@@ -105,7 +114,7 @@ enum boolean validaUsuario(){
 				continue;
 			}
 		}
-		printf("Acceso denegado. Verifique sus datos\n");
+		printf("\nAcceso denegado. Verifique sus datos,\n\n");
 		intentos--;
 	} while(intentos > 0);
 
@@ -113,3 +122,8 @@ enum boolean validaUsuario(){
 	return false;
 }
 
+void getch() {
+	printf("\nPulse una tecla para continuar...");
+	getchar();
+	getchar();
+}
