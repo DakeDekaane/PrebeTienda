@@ -94,7 +94,7 @@ void ImprimeInventario() {
 	}
 	else {
 		Nodo* aux = inicio;
-		printf(" Nombre \t Cantidad \t Precio\n");
+		printf("\n Nombre \t Cantidad \t Precio\n");
 		while(aux != NULL) {
 			if(strlen(aux->nombreProducto) <= 6) 
 				printf(" %s\t\t    %d\t\t %.2f\n",aux->nombreProducto,aux->cantidad,aux->precio);
